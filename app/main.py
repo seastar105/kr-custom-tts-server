@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
+from starlette.responses import FileResponse
 
 from app.api.routes.api import router as api_router
 
@@ -8,7 +8,10 @@ from app.api.routes.api import router as api_router
 def create_app() -> FastAPI:
     application = FastAPI()
 
-    application.mount("/", StaticFiles(directory=".", html=True), name="static")
+    @application.get("/")
+    async def root():
+        return FileResponse('index.html')
+
     # middlewares
     origins = [
         '*'

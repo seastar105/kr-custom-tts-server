@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <form id="tts" action="" method="post">
+    <form id="tts" action="[replace here]/api/tts" method="post">
         <p>
             <input type="text" name="prompt" id="prompt" placeholder="텍스트를 입력하세요." required autofocus maxlength=300 style="width:300px;height:200px;font-size:30px;">
         </p>
@@ -23,6 +23,7 @@
             var $form = $(this),
                 prompt = $form.find('input[name="prompt"]').val(),
                 url = $form.attr('action');
+
             $.ajax({
                 url: url,
                 type: "post",
