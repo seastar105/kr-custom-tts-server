@@ -1,3 +1,13 @@
 FROM python:3.9
 
-RUN pip install --no-cache-dir --upgrade fastapi>=0.68.0,<0.69.0 pydantic>=1.8.0,<2.0.0 uvicorn>=0.15.0,<0.16.0 espnet==202205 espnet_model_zoo g2pk aiofiles
+WORKDIR /code
+
+COPY ./requirements.txt /code/requirements.txt
+
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+
+RUN apt update -y && apt install -y libsndfile-dev
+
+COPY ./app /code/app
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
