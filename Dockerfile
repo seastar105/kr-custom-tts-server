@@ -1,0 +1,3 @@
+FROM python:3.9
+
+RUN pip install --no-cache-dir --upgrade fastapi>=0.68.0,<0.69.0 pydantic>=1.8.0,<2.0.0 uvicorn>=0.15.0,<0.16.0 espnet==202205 espnet_model_zoo g2pk aiofiles
