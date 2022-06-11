@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="HAESUNG JEON">
+    <title>kr-custom-tts-server</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <form id="tts" action="" method="post">
+        <p>
+            <input type="text" name="prompt" id="prompt" placeholder="텍스트를 입력하세요." required autofocus maxlength=300 style="width:300px;height:200px;font-size:30px;">
+        </p>
+        <p>
+            <input type="submit" id="submitButton" name="submitButton" value="음성합성하기">
+        </p>
+    </form>
+    <div id="result"></div>
+    <script>
+        $("#tts").submit(function(event) {
+            event.preventDefault();
+            var $form = $(this),
+                prompt = $form.find('input[name="prompt"]').val(),
+                url = $form.attr('action');
+            $.ajax({
+                url: url,
+                type: "post",
+                accept: "application/json",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({'text': prompt}),
+                dataType: "json",
+                success: function(data) {
+                    $('audio #source').attr('src', data);
+                    $('audio').get(0).load();
+                    $('audio').get(0).play();
+                }
+            });
+        });
+    </script>
+    <audio controls>
+        <source id="source" src="" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+</body>
+
+</html>
