@@ -1,12 +1,29 @@
-from typing import Optional
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
-app = FastAPI()
+from app.api.routes.api import router as api_router
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Optional[str] = None):
-    return {"item_id": item_id, "q": q}
+def create_app() -> FastAPI:
+    application = FastAPI()
+
+    application.mount("/", StaticFiles(directory=".", html=True), name="static")
+    # middlewares
+    origins = [
+        '*'
+    ]
+
+    application.add_middleware(
+        CORSMiddleware,
+        allow_origins=origins,
+        allow_methods=['*'],
+        allow_headers=['*']
+    )
+
+    application.include_router(api_router)
+
+    return application
+
+
+app = create_app()
