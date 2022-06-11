@@ -30,7 +30,7 @@ def load_model():
     "/tts",
     responses={
         200: {
-            "content": {"audio/wave": {}}
+            "content": {"audio/wav": {}}
         }
     },
     response_class=Response
