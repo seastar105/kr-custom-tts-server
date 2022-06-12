@@ -10,4 +10,6 @@ RUN apt update -y && apt install -y libsndfile-dev
 
 COPY ./app /code/app
 
+COPY ./index.html /code/index.html
+
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
